@@ -1,0 +1,10 @@
+{% block others_widget %}
+    <div class="form-others">
+        {% for key,choice in form.vars.choices %}
+            <div class="form-check">
+                {{ form_label(form[key],'',{'label_attr': {'class':'form-check-checkbox'}}) }}
+                {{ form_widget(form[key], {'attr': {'class':'form-check-input'}}) }}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

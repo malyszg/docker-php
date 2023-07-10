@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CssController!{% endblock %}
+
+{% block body %}
+    <style>
+        ul {
+            list-style: none;
+        }
+        ul li {
+            padding: 5px 0px 5px 0px;
+        }
+        ul li::before {
+            background: url("http://localhost:15012/info.png");
+            background-size: 20px;
+            content: " ";
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+        ul li:hover:before {
+            background: url("http://localhost:15012/info2.png");
+            background-size: 20px;
+        }
+        ul li a {
+            color: black;
+            text-decoration: none;
+        }
+        ul li a:hover {
+            color: red;
+        }
+    </style>
+
+    <ul>
+        <li><a href="">opcja1</a></li>
+        <li><a href="">opcja1</a></li>
+    </ul>
+
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MyTestController!{% endblock %}
+
+{% block body %}
+    <div class="properties">
+        <ul>
+            {% for prop in props %}
+                <li>{{ prop.name }} {{ prop.price|price(2, ',', '.')|price_color }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

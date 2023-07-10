@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MyTestController!{% endblock %}
+
+{% block body %}
+    <p>sesja {{ session }}</p>
+    <p>cookie {{ cookie }}</p>
+    <p>redis {{ redis }}</p>
+    <p>my variable {{ my_variable }}</p>
+    <p>my parameter {{ my_param }}</p>
+    <p>Lista ofert:</p>
+    <div class="controller-inside">
+        {{ render(controller(
+            'App\\Controller\\MyTestController::getProperties'
+        )) }}
+    </div>
+{% endblock %}

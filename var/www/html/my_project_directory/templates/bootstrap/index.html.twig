@@ -1,0 +1,155 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello BootstrapController!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-2">
+                <img src="/phone.webp" class="img-fluid" alt="Responsive image"/>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-10">
+                <p style="padding: 30px 0px 0px 0px;">
+                    Morizon.pl to wyszukiwarka nieruchomości, w której znajdziesz najwięcej ogłoszeń w Polsce -
+                    mieszkania (w tym nowe, z rynku pierwotnego), domy, działki, nieruchomości komercyjne, pokoje i
+                    garaże. Prezentujemy oferty bezpośrednie (prywatne), agencji nieruchomości oraz deweloperskie.
+                    Pomożemy Ci znaleźć M!
+
+                    Jeśli reprezentujesz biuro nieruchomości lub dewelopera i interesuje Cię sprzedaż mieszkań lub domów
+                    oraz ich wynajem, dołącz do nas. Jeżeli zaś chcesz dodać pojedyncze ogłoszenie typu "sprzedam
+                    mieszkanie", "wynajmę mieszkanie" lub "sprzedam dom", zrób to tutaj. Interesuje Cię kredyt
+                    hipoteczny? W tym też możemy Ci pomóc.
+                </p>
+            </div>
+        </div>
+
+        <!--- toast --->
+
+        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" id="toast1">
+            <div class="toast-header">
+                <img src="..." class="rounded me-2" alt="...">
+                <strong class="me-auto">Bootstrap</strong>
+                <small>11 mins ago</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Hello, world! This is a toast message.
+            </div>
+        </div>
+
+        <button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button>
+
+        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+            <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <img src="..." class="rounded me-2" alt="...">
+                    <strong class="me-auto">Bootstrap</strong>
+                    <small>11 mins ago</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    Hello, world! This is a toast message.
+                </div>
+            </div>
+        </div>
+
+        <button type="button" class="btn btn-primary" id="liveToastBtnRow">Show live toasts</button>
+
+        <div class="toast-container position-absolute p-3 top-0 end-0">
+            <div class="toast mytoastrow" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <img src="..." class="rounded me-2" alt="...">
+                    <strong class="me-auto">Bootstrap</strong>
+                    <small class="text-muted">just now</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    See? Just like this.
+                </div>
+            </div>
+
+            <div class="toast mytoastrow" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <img src="..." class="rounded me-2" alt="...">
+                    <strong class="me-auto">Bootstrap</strong>
+                    <small class="text-muted">2 seconds ago</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    Heads up, toasts will stack automatically
+                </div>
+            </div>
+        </div>
+
+        <!-- -->
+
+        <form>
+            <div class="form-group">
+                <label>Szukaj</label>
+                <input class="form-control searchfiled" id="input-text" placeholder="szukaj"/>
+            </div>
+        </form>
+
+    </div>
+
+    <script>
+        //alert(document.body.clientWidth);
+        $(document).ready(function () {
+            $('#toast1').toast('show');
+            $('#liveToastBtn').click(function () {
+                $('#liveToast').toast('show');
+            });
+            $('#liveToastBtnRow').click(function () {
+                $('.mytoastrow').toast('show');
+            });
+
+            const GetSpeech = () => {
+                console.log("clicked microphone");
+                const SpeechRecognition =  window.SpeechRecognition || window.webkitSpeechRecognition;
+
+                let recognition = new SpeechRecognition();
+                recognition.lang = 'pl-PL';
+                recognition.interimResults = false;
+                recognition.maxAlternatives = 1;
+
+                recognition.onstart = () => {
+                    console.log("starting listening, speak in microphone");
+                }
+                recognition.onspeechend = () => {
+                    console.log("stopped listening");
+                    recognition.stop();
+                }
+                recognition.onresult = (result) => {
+                    $(".searchfiled").val(result.results[0][0].transcript);
+                    console.log(result.results[0][0].transcript);
+                }
+
+                recognition.onnomatch = function(event) {
+                    alert('nomatch');
+                }
+
+                recognition.onerror = function(event) {
+                    alert('error ' + event.error);
+                }
+
+                recognition.start();
+            }
+
+            GetSpeech();
+
+        });
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style type="text/css">
+        .searchfiled {
+            background-image: url('/mc.png');
+            background-repeat: no-repeat;
+            background-position: right calc(.375em + .1875rem) center;
+            background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+            padding-right: calc(1.5em + .75rem);
+        }
+    </style>
+{% endblock %}

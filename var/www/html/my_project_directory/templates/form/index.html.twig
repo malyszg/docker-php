@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello FormController!{% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <div class="container">
+        {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_label(form.postcode) }} {{ form_widget(form.postcode) }} {{ form_errors(form.postcode) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.country) }} {{ form_widget(form.country) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.voivodeship) }} {{ form_widget(form.voivodeship) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.city_district) }} {{ form_widget(form.city_district) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.others) }} {{ form_widget(form.others) }}
+        </div>
+        {{ form_widget(form.submit) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
