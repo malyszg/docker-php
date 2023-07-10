@@ -1,0 +1,37 @@
+version: "3"
+services:
+ php:
+  image: my_php_mysql_extra
+  build: .
+  container_name: my_php_mysql_extra
+  ports:
+   - 15012:80
+  depends_on:
+   - mydb
+  volumes:
+   - /home/gtesmer/Pobrane/Docker_Masters-main/my_extra_project/var/www/html/:/var/www/html/
+  env_file:
+   - ./custom.env
+ mydb:
+  image: mysql:${VERSION_MYDB:-5.7}
+  environment:
+   MYSQL_ROOT_PASSWORD: root
+  volumes:
+   - /home/gtesmer/Pobrane/Docker_Masters-main/my_extra_project/var/lib/mysql/:/var/lib/mysql/
+ mycomposer:
+  image: composer:2.5.3
+  volumes:
+   - /home/gtesmer/Pobrane/Docker_Masters-main/my_extra_project/var/www/html/:/var/www/html/
+ myphpmyadmin:
+  image: phpmyadmin:5.2.1
+  restart: always
+  ports:
+   - 8080:80
+  environment:
+   - PMA_ARBITRARY=1
+ mycache:
+   image: redis:5
+
+networks:
+  default:
+   name: my-project-network-mysql-php
